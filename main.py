@@ -3,20 +3,71 @@ import os
 from pathlib import Path
 from enum import Enum
 
-# TODO: Find coordinates to other difficulties
-
-# Delaring variables
+# * Delaring variables/functions
 cwd = os.getcwd() # current working directory
 scriptDir = "" # directory of script being created
 scriptPath = "" # path directly to script file
 
-class Coordinates(Enum): # Stores coordinates of buttons
-    HARMLESS = 560,840
-    LENIENT = 222,222
-    STANDARD = 333,333
-    VIOLENT = 444,444
-    BRUTAL = 555,555
+# Awkward note: Getting all these coordinates took way too long T-T
+class DifCoordinates(Enum): # Stores coordinates of difficulty buttons
+    HARMLESS = 560, 850
+    LENIENT = 560, 750
+    STANDARD = 560, 550
+    VIOLENT = 560, 450
+    BRUTAL = 560, 250
 
+class LevCoordinates(Enum): # Stores coordinates of level buttons
+    LEVEL_0_s = 1650, 900
+    LEVEL_0_1 = 230, 625
+    LEVEL_0_2 = 600, 625
+    LEVEL_0_3 = 950, 625
+    LEVEL_0_4 = 1325, 625
+    LEVEL_0_5 = 1700, 625
+    LEVEL_1_s = 1600, 940
+    LEVEL_1_1 = 270, 675
+    LEVEL_1_2 = 715, 675
+    LEVEL_1_3 = 1150, 675
+    LEVEL_1_4 = 1600, 675
+    LEVEL_2_s = 1600, 900 # Relative to scroll 1
+    LEVEL_2_1 = 270, 625 # Relative to scroll 1
+    LEVEL_2_2 = 725, 625 # Relative to scroll 1
+    LEVEL_2_3 = 1150, 625 # Relative to scroll 1
+    LEVEL_2_4 = 1600, 625 # Relative to scroll 1
+    LEVEL_3_1 = 500, 500 # Relative to scroll 2
+    LEVEL_3_2 = 1380, 500 # Relative to scroll 2
+    LEVEL_4_s = 1600, 940
+    LEVEL_4_1 = 270, 675
+    LEVEL_4_2 = 715, 675
+    LEVEL_4_3 = 1150, 675
+    LEVEL_4_4 = 1600, 675
+    LEVEL_5_s = 1600, 900 # Relative to scroll 1
+    LEVEL_5_1 = 270, 625 # Relative to scroll 1
+    LEVEL_5_2 = 725, 625 # Relative to scroll 1
+    LEVEL_5_3 = 1150, 625 # Relative to scroll 1
+    LEVEL_5_4 = 1600, 625 # Relative to scroll 1
+    LEVEL_6_1 = 500, 500 # Relative to scroll 2
+    LEVEL_6_2 = 1380, 500 # Relative to scroll 2
+    LEVEL_7_s = 1600, 940
+    LEVEL_7_1 = 270, 675
+    LEVEL_7_2 = 715, 675
+    LEVEL_7_3 = 1150, 675
+    LEVEL_7_4 = 1600, 675
+    LEVEL_8_1 = 270, 625 # Relative to scroll 1
+    LEVEL_8_2 = 725, 625 # Relative to scroll 1
+    LEVEL_8_3 = 1150, 625 # Relative to scroll 1
+    LEVEL_8_4 = 1600, 625 # Relative to scroll 1
+    LEVEL_0_e = 220, 650
+    LEVEL_1_e = 580, 650
+    LEVEL_p_1 = 415, 600
+    LEVEL_p_2 = 950, 600
+    
+class LayCoordinates(Enum): # Store coordinates of layer buttons
+    PRELUDE = 1200, 750
+    ACT_1 = 1200, 670
+    ACT_2 = 1200, 600
+    ACT_3 = 1200, 520
+    ENCORES = 1200, 360
+    PRIME_SANCTUMS = 1200, 280
 
 # Deletes in-progress script
 def deleteScript():
@@ -27,7 +78,7 @@ def deleteScript():
 def clearTerminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-# Takes the question as an argument, returns 1 if "y", returns 0 if "n", repeats if input isnt either
+# Takes the question as an argument, returns 1 if "y", returns 0 if "n", repeats if input isnt either. Takes user input as argument
 def yesNo(prompt):
     while True:
         print(prompt)
@@ -44,7 +95,7 @@ def yesNo(prompt):
         clearTerminal()
         print('Not a valid input, please only type a "y" or an "n"')
 
-# Terminates the program if "exit" is typed at any point, checks if input is "exit" then terminated based on a y/n. Returns 1 if no
+# Terminates the program if "exit" is typed at any point, checks if input is "exit" then terminated based on a y/n. Returns 1 if no. Takes user input as argument
 def exitCheck(prompt):
     clearTerminal()
     if prompt.strip().lower() != "exit":    return
@@ -56,6 +107,25 @@ def exitCheck(prompt):
     print("Not terminating, returning...")
     return 1
 
+# Checks what layer a level belongs to, if you need to scroll and if so how much, Takes validated user inputted level as argument
+# Returns: Corresponding layer enum, if you need to scroll in level select (0 = no scrolling, 1 = middle scroll, 2 = full scroll)
+def LevelMenuCheck(level):
+    if level[2] == 'e':
+        return LayCoordinates["ENCORES"], 0
+    if level[0] == 'p':
+        return LayCoordinates["PRIME_SANCTUMS"], 0
+    if level[0] == '0':
+        return LayCoordinates["PRELUDE"], 0
+    if level[0] == '1' or level[0] == '2' or level[0] == '3':
+        needsToScroll = int(level[0]) - 1 # Subtracts 1 from layer number to get correct amount to scroll
+        return LayCoordinates["ACT_1"], needsToScroll
+    if level[0] == '4' or level[0] == '5' or level[0] == '6':
+        needsToScroll = int(level[0]) - 4 # Subtracts 4 from layer number to get correct amount to scroll
+        return LayCoordinates["ACT_2"], needsToScroll
+    if level[0] == '7' or level[0] == '8':
+        needsToScroll = int(level[0]) - 7 # Subtracts 7 from layer number to get correct amount to scroll
+        return LayCoordinates["ACT_3"], needsToScroll
+    
 # * MAIN CODE START
 # * MAIN CODE START
 # * MAIN CODE START
@@ -119,6 +189,7 @@ while True:
 
 print(f"Created file {scriptPath}")
 
+# * BEGINS WRITING TO SCRIPT FILE
 with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
         lines = data.readlines()
 
@@ -136,8 +207,8 @@ with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
             if exitCheck(difficulty) == 1: continue
             clearTerminal()
 
-            try: # Checks if difficulty in in Coordinates Enum
-                coords = Coordinates[difficulty.upper()]
+            try: # Checks if difficulty in in DifCoordinates Enum
+                coords = DifCoordinates[difficulty.upper()]
 
             except:
                 print(f"{difficulty} not a valid difficulty. Please make sure you entered a valid Ultrakill difficulty")
@@ -145,6 +216,7 @@ with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
 
             else: # Writes difficulty presets to file
                 print(f"Selecting difficulty {difficulty}\n")
+
                 script.write(f'print("Selecting {difficulty} difficulty")\n')
                 script.write("movie.frame_advance(30)\n")
                 script.write(f"mouse.move{str(coords.value)}\n")
@@ -153,4 +225,28 @@ with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
                 script.write("movie.frame_advance(30)\n")
                 script.write("mouse.left(false)\n")
                 script.write("movie.frame_advance(30)\n")
+
+                break
+
+        # * LAYER/LEVEL PROMPTS
+        while True:
+            print("Which level are you playing on?")
+            print("Main levels, secret levels, encores, prime sanctums work")
+            print("Please use the level abbreviation (0-1, p-2, 4-s, 1-e, etc)")
+
+            level = input().strip().lower()
+            if exitCheck(level) == 1: continue
+            clearTerminal()
+
+            try: # Checks if level in LevCoordinates Enum
+                coords = LevCoordinates[f"LEVEL_{level[0]}_{level[2]}"] # Turns level input into LevCoordinates format (1-2 -> LEVEL_1_2)
+                    
+            except:
+                print(f"LEVEL_{level[0]}_{level[2]}")
+                print(f"{level} not a valid level. Please make sure you entered a valid Ultrakill level with correct formatting")
+                continue
+            else:
+                levelData = LevelMenuCheck(level) # Returns a tuple of Corresponding layer enum, if you need to scroll in level select (0 = no scrolling, 1 = middle scroll, 2 = full scroll)
+                print(f"Selecting level {level} in {levelData[0]}")
+                print(f"NEED TO SCROLL = {levelData[1]}")
                 break
