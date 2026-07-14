@@ -219,12 +219,12 @@ with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
 
                 script.write(f'print("Selecting {difficulty} difficulty")\n')
                 script.write("movie.frame_advance(30)\n")
-                script.write(f"mouse.move{str(coords.value)}\n")
+                script.write(f"mouse.move({str(coords.value)})\n")
                 script.write("movie.frame_advance(30)\n")
                 script.write("mouse.left(true)\n")
                 script.write("movie.frame_advance(30)\n")
                 script.write("mouse.left(false)\n")
-                script.write("movie.frame_advance(30)\n")
+                script.write("movie.frame_advance(30)\n\n")
 
                 break
 
@@ -247,6 +247,40 @@ with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
                 continue
             else:
                 levelData = LevelMenuCheck(level) # Returns a tuple of Corresponding layer enum, if you need to scroll in level select (0 = no scrolling, 1 = middle scroll, 2 = full scroll)
-                print(f"Selecting level {level} in {levelData[0]}")
-                print(f"NEED TO SCROLL = {levelData[1]}")
+                print(f"Selecting level {level} in {levelData[0].name}")
+                
+                # Writes layer select to script
+                script.write(f'print("Selecting {levelData[0].name}")\n')
+                script.write(f"mouse.move({str(coords.value)})\n")
+                script.write("movie.frame_advance(30)\n")
+                script.write("mouse.left(true)\n")
+                script.write("movie.frame_advance(30)\n")
+                script.write("mouse.left(false)\n")
+                script.write("movie.frame_advance(30)\n\n")
+
+                script.write(f'print("Selecting {level}")\n')
+                # Writes scroll 1 to script if applicable
+                if levelData[1] == 1:
+                    script.write("mouse.move(1890,800)\n")
+                    script.write("movie.frame_advance(30)\n")
+                    script.write("mouse.left(true)\n")
+                    script.write("movie.frame_advance(30)\n")
+                    script.write("mouse.move(1890,500)\n")
+                    script.write("movie.frame_advance(30)\n")
+                    script.write("mouse.left(false)\n")
+                    script.write("movie.frame_advance(30)\n")
+                
+                # Writes scroll 2 to script if applicable
+                if levelData[1] == 2:
+                    script.write("mouse.move(1890,800)\n")
+                    script.write("movie.frame_advance(30)\n")
+                    script.write("mouse.left(true)\n")
+                    script.write("movie.frame_advance(30)\n")
+                    script.write("mouse.move(1890,225)\n")
+                    script.write("movie.frame_advance(30)\n")
+                    script.write("mouse.left(false)\n")
+                    script.write("movie.frame_advance(30)\n")
+
+                
+
                 break
