@@ -85,6 +85,7 @@ while True:
 
     if filePath == "":
         scriptDir = f"{cwd}/CreatedScripts"
+        if not os.path.exists(scriptDir): os.mkdir(scriptDir)
         print(f"Using default filepath {scriptDir}")
         break
 
