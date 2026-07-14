@@ -1,8 +1,8 @@
 MOVIE_CONFIG = {
-    fps = 60, -- same as setting frame
+    fps = 60,
 }
 
--- TAS FPS Parameter (VERY IMPORTANT FOR TIMINGS)
+-- TAS FPS Parameter
 env.fps=120
 
 -- Initial TAS Setup
@@ -56,8 +56,6 @@ mouse.left(false)
 print("Ending Mouse Testing")
 movie.frame_advance(10)
 
--- the start of your code!
-
 print("Selecting HARMLESS Difficulty")
 movie.frame_advance(30)
 mouse.move(560,840)
@@ -91,7 +89,6 @@ movie.frame_advance(30)
 mouse.left(false)
 movie.frame_advance(30)
 
--- IMPORTANT!! you need this in order to make angle adjustments AND to do anything really
 print("Setting Up Level Parameters")
 mouse.move(960,540)
 movie.frame_advance(150)
@@ -106,7 +103,6 @@ movie.frame_advance(2)
 key.release("tab")
 movie.frame_advance(2)
 
--- definitely can be simplified, but i'm not planning on doing so atm
 print("Enabling Cheats (Just in case...)")
 key.hold("uparrow")
 movie.frame_advance()
@@ -164,49 +160,3 @@ mouse.left(true)
 movie.frame_advance(20)
 mouse.left(false)
 movie.frame_advance(20)
-
--- Redline Setup --
-key.hold("d")
-movie.frame_advance(2)
-key.release("d")
-key.hold("1")
-movie.frame_advance()
-key.release("1")
-movie.frame_advance()
-key.hold("5")
-movie.frame_advance()
-key.release("5")
-movie.frame_advance()
-key.hold("5")
-movie.frame_advance()
-key.release("5")
-movie.frame_advance(100)
-mouse.right(true)
-movie.frame_advance()
-mouse.right(false)
-movie.frame_advance(50)
-mouse.left(true)
-movie.frame_advance()
-mouse.left(false)
-movie.frame_advance()
-key.hold("w")
-movie.frame_advance(50)
-key.release("w")
-movie.frame_advance(75)
-mouse.left(true)
-movie.frame_advance()
-mouse.left(false)
-key.hold("w")
-movie.frame_advance(150)
-key.release("w")
-movie.frame_advance()
-key.hold("s")
-movie.frame_advance()
-key.hold("shift")
-movie.frame_advance()
-key.release("shift")
-movie.frame_advance(10)
-key.hold("shift")
-movie.frame_advance()
-key.release("shift")
-key.release("s")

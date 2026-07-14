@@ -1,12 +1,27 @@
 import sys
 import os
 from pathlib import Path
+from enum import Enum
+
+# TODO: Find coordinates to other difficulties
 
 # Delaring variables
 cwd = os.getcwd() # current working directory
 scriptDir = "" # directory of script being created
 scriptPath = "" # path directly to script file
 
+class Coordinates(Enum): # Stores coordinates of buttons
+    HARMLESS = 560,840
+    LENIENT = 222,222
+    STANDARD = 333,333
+    VIOLENT = 444,444
+    BRUTAL = 555,555
+
+
+# Deletes in-progress script
+def deleteScript():
+    if scriptPath != "":
+        os.remove(scriptPath)
 
 # Clears terminal when called
 def clearTerminal():
@@ -34,7 +49,8 @@ def exitCheck(prompt):
     clearTerminal()
     if prompt.strip().lower() != "exit":    return
 
-    if yesNo("Are you sure you want to exit? (y/n)") == 1:
+    if yesNo("Are you sure you want to exit? Any in-progress script will be deleted. (y/n)") == 1:
+        deleteScript()
         print("Terminating program...")
         sys.exit(0)
     print("Not terminating, returning...")
@@ -90,14 +106,50 @@ while True:
     try:
         os.chdir(scriptDir)
         scriptFile = open(f"{name}.lua", "x")
+        scriptPath = os.path.abspath(scriptFile.name)
         os.chdir(cwd)
     except:
         clearTerminal()
         print("Error creating the file. Make sure file name is valid and a file with that name doesn't already exist")
     else:
-        scriptPath = os.path.abspath(scriptFile.name)
+        scriptFile.close()
         clearTerminal()
         break
 
 print(f"Created file {scriptPath}")
-print()
+
+with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
+        lines = data.readlines()
+
+        print("Writing default parameters and setup to file...")
+
+        # Write lines 1-58 in ScriptData file, default parameters
+        for line in lines[:58]:
+            script.write(line)
+
+        # * DIFFICULTY PROMPTS
+        while True:
+            print("Which difficulty will you be playing on?")
+            difficulty = input().strip()
+            
+            if exitCheck(difficulty) == 1: continue
+            clearTerminal()
+
+            try: # Checks if difficulty in in Coordinates Enum
+                coords = Coordinates[difficulty.upper()]
+
+            except:
+                print(f"{difficulty} not a valid difficulty. Please make sure you entered a valid Ultrakill difficulty")
+                continue
+
+            else: # Writes difficulty presets to file
+                print(f"Selecting difficulty {difficulty}\n")
+                script.write(f'print("Selecting {difficulty} difficulty")\n')
+                script.write("movie.frame_advance(30)\n")
+                script.write(f"mouse.move{str(coords.value)}\n")
+                script.write("movie.frame_advance(30)\n")
+                script.write("mouse.left(true)\n")
+                script.write("movie.frame_advance(30)\n")
+                script.write("mouse.left(false)\n")
+                script.write("movie.frame_advance(30)\n")
+                break
