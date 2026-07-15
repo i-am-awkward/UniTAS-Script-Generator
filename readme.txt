@@ -1,15 +1,22 @@
 Welcome to my UniTAS script generator! This tool is made in python, so just make sure you have it installed
 
-This currently only made for Ultrakill, and it's intended to get rid of copy pasting boilerplate code and finding specific pixels to menu through.
+This currently only made for Ultrakill, and it's intended to get rid of copy pasting boilerplate code and brute forcing specific pixels to menu through.
+This tool also writes built-in methods for speedrunning tech in the script itself to avoid more boilerplate. Currently the list of tech and usage is as follows:
 
-As of now I plan to make it create a new .lua file with all the start menuing and configurations. I may in the future add preset tech you can append to an existing script
-(Like a flick ub, ssj, misclip, etc)
+- Equip weapons // Usage: equipWeapon(weaponKey, variationKey) 
+    weaponKey = key that corresponds to the weapon you're equipping
+    variationKey = key that corresponds to the variation you're equipping, does nothing if no argument given
+
+- Ssj's // Usage: SSJ(frame)
+    frame = the frame ssj you want
+
+As of now I plan to make it create a new .lua file with all the start menuing and configurations. I may in the future add more preset tech
 
 Works for 1920x1080
 
 Usage instructions:
 Just run the python file in your terminal and follow the prompts
-// I will most likley add a shorthand way to run the script so you dont have to go through the prompts if you dont want to.
+// I will most likley add a shorthand way to run the script later so you dont have to go through the prompts if you dont want to.
 it will probably look like: "../main.py --/home/awkward --tasExample..." and so on with all the other args
 
 

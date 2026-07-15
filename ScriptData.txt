@@ -1,9 +1,37 @@
-MOVIE_CONFIG = {
-    fps = 60,
-}
-
 -- TAS FPS Parameter
 env.fps=120
+
+-- BUILT-IN FUNCTIONS
+
+-- Equips weapon and variation, takes in the key corresponding to your weapon and the key corresponding to your variation bind. Variation key argument is optional
+function equipWeapon(weaponKey, variationKey)
+    Weapon = weaponKey
+    Variation = variationKey or "none"
+    key.hold(Weapon)
+    movie.frame_advance()
+    key.release(Weapon)
+
+    if Variation ~= "none" then
+        movie.frame_advance()
+        key.hold(Variation)
+        movie.frame_advance()
+        key.release(Variation)
+    end
+end
+
+-- Performs an ssj, takes in the frame ssj you want
+function SSJ(frame)
+    delay = frame
+    key.hold("leftctrl")
+    movie.frame_advance()
+    key.release("leftctrl")
+    movie.frame_advance(delay)
+    key.hold(space)
+    movie.frame_advance()
+    key.release("space")
+end
+
+-- END OF BUILT-IN FUNCTIONS
 
 -- Initial TAS Setup
 print("Setting Playback Speed")
@@ -55,39 +83,6 @@ mouse.left(false)
 
 print("Ending Mouse Testing")
 movie.frame_advance(10)
-
-print("Selecting HARMLESS Difficulty")
-movie.frame_advance(30)
-mouse.move(560,840)
-movie.frame_advance(30)
-mouse.left(true)
-movie.frame_advance(30)
-mouse.left(false)
-movie.frame_advance(30)
-
-print("Selecting ACT I: INFINITE HYPERDEATH")
-mouse.move(960,680)
-movie.frame_advance(30)
-mouse.left(true)
-movie.frame_advance(30)
-mouse.left(false)
-movie.frame_advance(30)
-
-print("Selecting 3-2: IN THE FLESH")
-mouse.move(1900,950)
-movie.frame_advance(30)
-mouse.left(true)
-movie.frame_advance(30)
-mouse.move(1900,200)
-movie.frame_advance(30)
-mouse.left(false)
-movie.frame_advance(30)
-mouse.move(1390,500)
-movie.frame_advance(30)
-mouse.left(true)
-movie.frame_advance(30)
-mouse.left(false)
-movie.frame_advance(30)
 
 print("Setting Up Level Parameters...")
 mouse.move(960,540)
@@ -160,78 +155,3 @@ mouse.left(true)
 movie.frame_advance(20)
 mouse.left(false)
 movie.frame_advance(20)
-
-COORDINATES::
-
-DIFFICULTIES:
-harmless = 560,850
-lenient = 560,750
-standard = 560,550
-violent = 560,450
-brutal = 560,250
-
-LAYERS:
-prelude = 1200, 750
-act 1 = 1200, 670
-act 2 = 1200, 600
-act 3 = 1200, 520
-encores = 1200, 360
-prime sanctums = 1200, 280
-the cyber grind = 1200, 200
-sandbox = 1200, 125
-
-LEVELS::
-
-PRELUDE:
-0-S = 1650, 900
-0-1 = 230, 625
-0-2 = 600, 625
-0-3 = 950, 625
-0-4 = 1325, 625
-0-5 = 1700, 625
-
-ACTS: -- Numbers will be for act 1 but work will all other acts
-1-S = 1600, 940
-1-1 = 270, 675
-1-2 = 715, 675
-1-3 = 1150, 675
-1-4 = 1600, 675
-
--- SCROLL COMMANDS FOR LAYER 2
-mouse.move(1890, 800)
-movie.frame_advance(30)
-mouse.left(true)
-movie.frame_advance(30)
-mouse.move(1890, 500)
-movie.frame_advance(30)
-mouse.left(false)
-movie.frame_advance(30)
--- END OF SCROLL COMMANDS
-
-2-S = 1600, 900
-2-1 = 270, 625
-2-2 = 725, 625
-2-3 = 1150, 625
-2-4 = 1600, 625
-
--- SCROLL COMMANDS FOR LAYER 3
-mouse.move(1890, 800)
-movie.frame_advance(30)
-mouse.left(true)
-movie.frame_advance(30)
-mouse.move(1890, 225)
-movie.frame_advance(30)
-mouse.left(false)
-movie.frame_advance(30)
--- END OF SCROLL COMMANDS
-
-3-1 = 500, 500
-3-2 = 1380, 500
-
-ENCORES:
-0-E = 220, 650
-1-E = 580, 650
-
-PRIME SANCTUMS:
-P-1 = 415, 600
-P-2 = 950, 600

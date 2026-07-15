@@ -191,96 +191,112 @@ print(f"Created file {scriptPath}")
 
 # * BEGINS WRITING TO SCRIPT FILE
 with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
-        lines = data.readlines()
+    lines = data.readlines()
 
-        print("Writing default parameters and setup to file...")
+    print("Writing default parameters, built-in functions, and setup to file...")
 
-        # Write lines 1-58 in ScriptData file, default parameters
-        for line in lines[:58]:
-            script.write(line)
+    # Write lines 1-90 in ScriptData file, default parameters
+    for line in lines[:90]:
+        script.write(line)
 
-        # * DIFFICULTY PROMPTS
-        while True:
-            print("Which difficulty will you be playing on?")
-            difficulty = input().strip()
-            
-            if exitCheck(difficulty) == 1: continue
-            clearTerminal()
+    # * DIFFICULTY PROMPTS
+    while True:
+        print("Which difficulty will you be playing on?")
+        difficulty = input().strip()
+        
+        if exitCheck(difficulty) == 1: continue
+        clearTerminal()
 
-            try: # Checks if difficulty in in DifCoordinates Enum
-                coords = DifCoordinates[difficulty.upper()]
+        try: # Checks if difficulty in in DifCoordinates Enum
+            coords = DifCoordinates[difficulty.upper()]
 
-            except:
-                print(f"{difficulty} not a valid difficulty. Please make sure you entered a valid Ultrakill difficulty")
-                continue
+        except:
+            print(f"{difficulty} not a valid difficulty. Please make sure you entered a valid Ultrakill difficulty")
+            continue
 
-            else: # Writes difficulty presets to file
-                print(f"Selecting difficulty {difficulty}\n")
+        else: # Writes difficulty presets to file
+            print(f"Selecting difficulty {difficulty}\n")
 
-                script.write(f'print("Selecting {difficulty} difficulty")\n')
-                script.write("movie.frame_advance(30)\n")
-                script.write(f"mouse.move({str(coords.value)})\n")
+            script.write(f'print("Selecting {difficulty} difficulty")\n')
+            script.write("movie.frame_advance(30)\n")
+            script.write(f"mouse.move({str(coords.value)})\n")
+            script.write("movie.frame_advance(30)\n")
+            script.write("mouse.left(true)\n")
+            script.write("movie.frame_advance(30)\n")
+            script.write("mouse.left(false)\n")
+            script.write("movie.frame_advance(30)\n\n")
+
+            break
+
+    # * LAYER/LEVEL PROMPTS
+    while True:
+        print("Which level are you playing on?")
+        print("Main levels, secret levels, encores, prime sanctums work")
+        print("Please use the level abbreviation (0-1, p-2, 4-s, 1-e, etc)")
+
+        level = input().strip().lower()
+        if exitCheck(level) == 1: continue
+        clearTerminal()
+
+        try: # Checks if level in LevCoordinates Enum
+            coords = LevCoordinates[f"LEVEL_{level[0]}_{level[2]}"] # Turns level input into LevCoordinates format (1-2 -> LEVEL_1_2)
+                
+        except:
+            print(f"{level} not a valid level. Please make sure you entered a valid Ultrakill level with correct formatting")
+            continue
+        else:
+            levelData = LevelMenuCheck(level) # Returns a tuple of Corresponding layer enum, if you need to scroll in level select (0 = no scrolling, 1 = middle scroll, 2 = full scroll)
+            print(f"Selecting level {level} in {levelData[0].name}")
+                
+            # Writes layer select to script
+            script.write(f'print("Selecting {levelData[0].name}")\n')
+            script.write(f"mouse.move({levelData[0].value})\n")
+            script.write("movie.frame_advance(30)\n")
+            script.write("mouse.left(true)\n")
+            script.write("movie.frame_advance(30)\n")
+            script.write("mouse.left(false)\n")
+            script.write("movie.frame_advance(30)\n\n")
+
+            script.write(f'print("Selecting {level}")\n')
+            # Writes scroll 1 to script if applicable
+            if levelData[1] == 1:
+                script.write("mouse.move(1890,800)\n")
                 script.write("movie.frame_advance(30)\n")
                 script.write("mouse.left(true)\n")
                 script.write("movie.frame_advance(30)\n")
+                script.write("mouse.move(1890,500)\n")
+                script.write("movie.frame_advance(30)\n")
                 script.write("mouse.left(false)\n")
-                script.write("movie.frame_advance(30)\n\n")
-
-                break
-
-        # * LAYER/LEVEL PROMPTS
-        while True:
-            print("Which level are you playing on?")
-            print("Main levels, secret levels, encores, prime sanctums work")
-            print("Please use the level abbreviation (0-1, p-2, 4-s, 1-e, etc)")
-
-            level = input().strip().lower()
-            if exitCheck(level) == 1: continue
-            clearTerminal()
-
-            try: # Checks if level in LevCoordinates Enum
-                coords = LevCoordinates[f"LEVEL_{level[0]}_{level[2]}"] # Turns level input into LevCoordinates format (1-2 -> LEVEL_1_2)
-                    
-            except:
-                print(f"LEVEL_{level[0]}_{level[2]}")
-                print(f"{level} not a valid level. Please make sure you entered a valid Ultrakill level with correct formatting")
-                continue
-            else:
-                levelData = LevelMenuCheck(level) # Returns a tuple of Corresponding layer enum, if you need to scroll in level select (0 = no scrolling, 1 = middle scroll, 2 = full scroll)
-                print(f"Selecting level {level} in {levelData[0].name}")
+                script.write("movie.frame_advance(30)\n")
                 
-                # Writes layer select to script
-                script.write(f'print("Selecting {levelData[0].name}")\n')
-                script.write(f"mouse.move({str(coords.value)})\n")
+            # Writes scroll 2 to script if applicable
+            if levelData[1] == 2:
+                script.write("mouse.move(1890,800)\n")
                 script.write("movie.frame_advance(30)\n")
                 script.write("mouse.left(true)\n")
                 script.write("movie.frame_advance(30)\n")
+                script.write("mouse.move(1890,225)\n")
+                script.write("movie.frame_advance(30)\n")
                 script.write("mouse.left(false)\n")
-                script.write("movie.frame_advance(30)\n\n")
+                script.write("movie.frame_advance(30)\n")
 
-                script.write(f'print("Selecting {level}")\n')
-                # Writes scroll 1 to script if applicable
-                if levelData[1] == 1:
-                    script.write("mouse.move(1890,800)\n")
-                    script.write("movie.frame_advance(30)\n")
-                    script.write("mouse.left(true)\n")
-                    script.write("movie.frame_advance(30)\n")
-                    script.write("mouse.move(1890,500)\n")
-                    script.write("movie.frame_advance(30)\n")
-                    script.write("mouse.left(false)\n")
-                    script.write("movie.frame_advance(30)\n")
-                
-                # Writes scroll 2 to script if applicable
-                if levelData[1] == 2:
-                    script.write("mouse.move(1890,800)\n")
-                    script.write("movie.frame_advance(30)\n")
-                    script.write("mouse.left(true)\n")
-                    script.write("movie.frame_advance(30)\n")
-                    script.write("mouse.move(1890,225)\n")
-                    script.write("movie.frame_advance(30)\n")
-                    script.write("mouse.left(false)\n")
-                    script.write("movie.frame_advance(30)\n")
+            # Writes level select to script (relative to scroll if applicable)
 
-                
+            script.write(f"mouse.move({coords.value})\n")
+            script.write("movie.frame_advance(30)\n")
+            script.write("mouse.left(true)\n")
+            script.write("movie.frame_advance(30)\n")
+            script.write("mouse.left(false)\n")
+            script.write("movie.frame_advance(30)\n")
 
-                break
+            break
+        
+
+    # * STARTING PARAMS/TAB MENU/CHEATS
+    print("Writing more default parameters, enabling the tab menu, and enabling cheats...")
+
+    # Write lines 91-157 in ScriptData file, default parameters, tab menu, and cheats
+    for line in lines[59:129]:
+        script.write(line)
+
+    print("Your script has been created! Enjoy :D")
