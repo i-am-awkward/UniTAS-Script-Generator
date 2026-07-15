@@ -257,16 +257,17 @@ with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
             script.write("mouse.left(false)\n")
             script.write("movie.frame_advance(30)\n\n")
 
+            script.write(f'print("Selecting {level}")\n')
+
             # Writes in encore button select if applicable
-            if level == "0-e" or "1-e":
-                script.write("mouse.move(950, 350)")
+            if level == "0-e" or level == "1-e":
+                script.write("mouse.move(950, 350)\n")
                 script.write("movie.frame_advance(30)\n")
                 script.write("mouse.left(true)\n")
                 script.write("movie.frame_advance(30)\n")
                 script.write("mouse.left(false)\n")
                 script.write("movie.frame_advance(30)\n")
 
-            script.write(f'print("Selecting {level}")\n')
             # Writes scroll 1 to script if applicable
             if levelData[1] == 1:
                 script.write("mouse.move(1890,800)\n")
@@ -299,7 +300,7 @@ with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
 
             # Writes 0-1 button select if applicable
             if level == "0-1":
-                script.write("mouse.move(950, 450)")
+                script.write("mouse.move(950, 450)\n")
                 script.write("movie.frame_advance(30)\n")
                 script.write("mouse.left(true)\n")
                 script.write("movie.frame_advance(30)\n")
