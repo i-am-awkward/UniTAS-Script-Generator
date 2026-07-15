@@ -35,7 +35,7 @@ end
 
 -- Initial TAS Setup
 print("Setting Playback Speed")
-movie.playback_speed(1)
+movie.playback_speed(3)
 
 print("Quick Test (1)")
 movie.frame_advance(50)
@@ -87,6 +87,9 @@ movie.frame_advance(10)
 print("Setting Up Level Parameters...")
 mouse.move(960,540)
 movie.frame_advance(150)
+
+print("Resetting Playback Speed")
+movie.playback_speed(1)
 
 print("Enabling TAB Menu...")
 key.hold("tab")

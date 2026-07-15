@@ -219,7 +219,7 @@ with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
 
             script.write(f'print("Selecting {difficulty} difficulty")\n')
             script.write("movie.frame_advance(30)\n")
-            script.write(f"mouse.move({str(coords.value)})\n")
+            script.write(f"mouse.move{str(coords.value)}\n")
             script.write("movie.frame_advance(30)\n")
             script.write("mouse.left(true)\n")
             script.write("movie.frame_advance(30)\n")
@@ -250,12 +250,21 @@ with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
                 
             # Writes layer select to script
             script.write(f'print("Selecting {levelData[0].name}")\n')
-            script.write(f"mouse.move({levelData[0].value})\n")
+            script.write(f"mouse.move{levelData[0].value}\n")
             script.write("movie.frame_advance(30)\n")
             script.write("mouse.left(true)\n")
             script.write("movie.frame_advance(30)\n")
             script.write("mouse.left(false)\n")
             script.write("movie.frame_advance(30)\n\n")
+
+            # Writes in encore button select if applicable
+            if level == "0-e" or "1-e":
+                script.write("mouse.move(950, 350)")
+                script.write("movie.frame_advance(30)\n")
+                script.write("mouse.left(true)\n")
+                script.write("movie.frame_advance(30)\n")
+                script.write("mouse.left(false)\n")
+                script.write("movie.frame_advance(30)\n")
 
             script.write(f'print("Selecting {level}")\n')
             # Writes scroll 1 to script if applicable
@@ -281,13 +290,21 @@ with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
                 script.write("movie.frame_advance(30)\n")
 
             # Writes level select to script (relative to scroll if applicable)
-
-            script.write(f"mouse.move({coords.value})\n")
+            script.write(f"mouse.move{coords.value}\n")
             script.write("movie.frame_advance(30)\n")
             script.write("mouse.left(true)\n")
             script.write("movie.frame_advance(30)\n")
             script.write("mouse.left(false)\n")
             script.write("movie.frame_advance(30)\n")
+
+            # Writes 0-1 button select if applicable
+            if level == "0-1":
+                script.write("mouse.move(950, 450)")
+                script.write("movie.frame_advance(30)\n")
+                script.write("mouse.left(true)\n")
+                script.write("movie.frame_advance(30)\n")
+                script.write("mouse.left(false)\n")
+                script.write("movie.frame_advance(30)\n")
 
             break
         
@@ -295,8 +312,8 @@ with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
     # * STARTING PARAMS/TAB MENU/CHEATS
     print("Writing more default parameters, enabling the tab menu, and enabling cheats...")
 
-    # Write lines 91-157 in ScriptData file, default parameters, tab menu, and cheats
-    for line in lines[59:129]:
+    # Write lines 91-160 in ScriptData file, default parameters, tab menu, and cheats
+    for line in lines[91:160]:
         script.write(line)
 
     print("Your script has been created! Enjoy :D")

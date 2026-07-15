@@ -69,6 +69,9 @@ ENCORES:
 0-E = 220, 650
 1-E = 580, 650
 
+Encore button = 950, 350
+0-1 intro button = 950, 450
+
 PRIME SANCTUMS:
 P-1 = 415, 600
 P-2 = 950, 600
