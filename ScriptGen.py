@@ -191,12 +191,32 @@ print(f"Created file {scriptPath}")
 
 # * BEGINS WRITING TO SCRIPT FILE
 with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
+
+    # * FPS PROMPTS
+
+    while True:
+        print("Which fps would you like to use? Please enter a number between 0 and 240.")
+        fps = input().strip()
+
+        if exitCheck(fps) == 1: continue
+        clearTerminal()
+
+        
+        if int(fps) >= 0 and int(fps) <= 240:
+            print(f"Using {fps} fps")
+            script.write(f"-- TAS FPS Parameter\nenv.fps={fps}\n\n")
+        else:
+            print(f"{fps} is not a valid fps, please enter a number between 0 and 240")
+            continue
+
+        break
+
     lines = data.readlines()
 
     print("Writing default parameters, built-in functions, and setup to file...")
 
-    # Write lines 1-90 in ScriptData file, default parameters
-    for line in lines[:90]:
+    # Write lines 1-86 in ScriptData file, default parameters
+    for line in lines[:87]:
         script.write(line)
 
     # * DIFFICULTY PROMPTS
@@ -313,8 +333,8 @@ with open(f"{scriptPath}", "a") as script, open ("ScriptData.txt", "r") as data:
     # * STARTING PARAMS/TAB MENU/CHEATS
     print("Writing more default parameters, enabling the tab menu, and enabling cheats...")
 
-    # Write lines 91-160 in ScriptData file, default parameters, tab menu, and cheats
-    for line in lines[91:160]:
+    # Write lines 87-158 in ScriptData file, default parameters, tab menu, and cheats
+    for line in lines[86:158]:
         script.write(line)
 
     print("Your script has been created! Enjoy :D")

@@ -1,6 +1,3 @@
--- TAS FPS Parameter
-env.fps=120
-
 -- BUILT-IN FUNCTIONS
 
 -- Equips weapon and variation, takes in the key corresponding to your weapon and the key corresponding to your variation bind. Variation key argument is optional
