@@ -10,15 +10,20 @@ This tool also writes built-in methods for speedrunning tech in the script itsel
 - Ssj's // Usage: SSJ(frame)
     frame = the frame ssj you want
 
-As of now I plan to make it create a new .lua file with all the start menuing and configurations. I may in the future add more preset tech
+I may in the future add more preset tech
 
 Works for 1920x1080
 
+Installation instructions:
+
+Open your terminal and run:
+git clone https://github.com/i-am-awkward/UniTAS-Script-Generator.git
+
+Then in the directory it was cloned in, run:
+python ScriptGen.py
+
 Usage instructions:
 Just run the python file in your terminal and follow the prompts
-// I will most likley add a shorthand way to run the script later so you dont have to go through the prompts if you dont want to.
-it will probably look like: "../main.py --/home/awkward --tasExample..." and so on with all the other args
-
 
 Made by Awkward
 (I did steal some of Darkn's code so credit to him for some of the Lua preset lines in ScriptData.txt)
